@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  dog-breed-api:
+    image: dog-breed-api:dev
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    depends_on:
+      - postgres
+    environment: {
+      NODE_ENV: "development"
+    }
+    volumes:
+      - ./:/usr/src/app # For nodemon to watch for file changes
+      - /usr/src/app/node_modules # So it doesn't use the local node_modules
+    ports:
+      - "3000:3000" # HTTP port
+      - "3001:3001" # HTTPS port
+      - "9229:9229" # Debug port
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postAdmin
+      POSTGRES_PASSWORD: 8P69RoDj10KJF8LS
+      POSTGRES_DB: dog-breeds-api

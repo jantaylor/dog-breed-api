@@ -1,25 +1,48 @@
 {
   "name": "dog-breed-api",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
+  "main": "src/index.js",
+  "bin": "src/index.js",
   "scripts": {
-    "start": "node ./src/server/index.js",
-    "test": "node ./node_modules/mocha/bin/mocha"
+    "start": "node src/index.js",
+    "start:dev": "nodemon src/index.js --inspect=0.0.0.0:9229",
+    "pretest": "SET NODE_ENV=test",
+    "test": "node ./node_modules/mocha/bin/mocha \"./src/__tests__/*.test.js\"",
+    "test:docker": "docker-compose -p tests run -p 3000 --rm dog-breed-api yarn run watch:tests",
+    "lint": "standard --fix && prettier-eslint --ignore 'coverage/**/*.js' --list-different '**/*.js'",
+    "format": "prettier-eslint --write true --ignore-path .gitignore '**/*.js'"
   },
   "keywords": [],
   "author": "Jan Taylor",
   "license": "MIT",
-  "devDependencies": {
-    "chai": "4.1.1",
-    "chai-http": "^3.0.0",
-    "mocha": "3.5.0"
-  },
   "dependencies": {
-    "@koa/cors": "^2.2.1",
-    "knex": "^0.13.0",
-    "koa": "^2.3.0",
-    "koa-bodyparser": "^4.2.0",
-    "koa-router": "^7.2.1",
-    "pg": "^7.1.2"
+    "@koa/cors": "^2.2.3",
+    "bunyan": "^1.8.12",
+    "bunyan-format": "^0.2.1",
+    "config": "^3.0.1",
+    "dotenv": "^6.2.0",
+    "knex": "^0.16.3",
+    "koa": "^2.7.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-bunyan-logger": "^2.1.0",
+    "koa-helmet": "^4.0.0",
+    "koa-router": "^7.4.0",
+    "pg": "^7.8.1"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.1",
+    "mocha": "^6.0.2",
+    "nodemon": "^1.18.10",
+    "prettier-eslint-cli": "^4.7.1",
+    "standard": "^12.0.1"
+  },
+  "pkg": {
+    "scripts": [
+      "src",
+      "!**/__tests__"
+    ],
+    "assets": "config"
   }
 }

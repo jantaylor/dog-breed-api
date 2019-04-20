@@ -14,9 +14,5 @@ dist
 build
 data
 
-# config
-config/local*
-config/development*
-
 # coverage
 coverage
