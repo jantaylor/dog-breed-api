@@ -7,6 +7,7 @@ The goal of this project is to show how to run a modern KOA API server that ran 
 - Node 10+
 - Docker
 - yarn
+- knexJS installed globally `yarn global add knex`
 
 > `yarn` is recommended.
 
@@ -26,7 +27,17 @@ $ npm test
 $ yarn test
 ```
 
-## Running Local Development
+## Local Development
+
+### Migrate & Seed Database
+
+```zsh
+$ npm run migrate && npm run seed
+# or
+$ yarn migrate && yarn seed
+```
+
+### Running Local
 
 ```zsh
 $ npm run start:dev
@@ -48,16 +59,23 @@ $ docker run \
     --init \
     dog-breed-api:dev
 ```
-Go visit http://localhost:3000 or exposed PORT=ENV
+
+For just the database:
+```zsh
+$ docker run -d -p 5432:5432 -e POSTGRES_USER=postAdmin -e POSTGRES_PASSWORD=8P69RoDj10KJF8LS -e POSTGRES_DB=dog-breeds-api postgres:latest
+```
 
 OR
 
-Docker container up and build latest image
+Docker container up and build latest image:
 ```zsh
-$ docker-compose up --build;
+$ docker-compose up -d --build;
 ```
 
-Docker container down
+then hit the APIs below.
+
+
+Stop the container and remove it with:
 ```zsh
 $ docker-compose down;
 ```
@@ -69,9 +87,6 @@ $ docker build -t dog-breed-api:latest .
 $ docker run -p 3000:3000 --init dog-breed-api:latest
 ```
 Visit http://localhost:3000 or https://localhost:3001 if https is setup
-
-## Insomnia/Postman config
-
 
 ## Routes
 
@@ -89,3 +104,28 @@ Visit http://localhost:3000 or https://localhost:3001 if https is setup
 
 > `DELETE /api/v1/breed/:id`\
 > Delete breed with id
+
+## Example Breed Body
+
+```json
+{
+    "name": "Doberman Pinscher",
+    "nicknames": "Doberman, Dobe, Dobynm, Dobie, Dobermann",
+    "description": "The Doberman Pinscher, or Dobermann, or Doberman, is a medium-large breed of domestic dog originally developed around 1890 by Karl Friedrich Louis Dobermann, a tax collector from Germany.",
+    "origin": "Germany",
+    "life_span": "10 - 13 years",
+    "temperament": "Intelligent, Obedient, Fearless, Loyal, Alert, Energetic, Confident",
+    "colors": "White, Fawn, Black, Blue, Red, Black & Rust, Red & Rust, Blue & Rust, Fawn & Rust",
+    "height": {
+        "male": 28,
+        "female": 27
+    },
+    "weight": {
+        "male": 100,
+        "female": 90
+    },
+    "coat": "Short",
+    "akc": "Working",
+    "image": "url string"
+}
+```

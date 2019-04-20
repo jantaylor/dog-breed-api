@@ -20,7 +20,7 @@ function cleanError (err) {
  * @default {Function} () => {} - A blank function
  */
 function errorHandlerFactory (logError = () => {}) {
-  return function errorHandler (err, req, res, next) {
+  return function errorHandler (err, req, res, _next) {
     logError(err, req)
     const error = cleanError(err)
     res.status(error.status || err.status || err.statusCode || 500)

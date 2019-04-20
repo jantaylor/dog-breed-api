@@ -2,6 +2,9 @@
 
 const { STATUS_CODES } = require('http')
 
+/**
+ * Extends the Error class with a custom NotFoundError
+ */
 class NotFoundError extends Error {
   constructor () {
     super(STATUS_CODES['404'])
@@ -12,10 +15,10 @@ class NotFoundError extends Error {
 }
 
 /**
- * Create a NotFound error handling middleware
+ * Creates a NotFound error handling middleware
  */
 function notFoundHandlerFactory () {
-  return function notFoundHandler (req, res, next) {
+  return function notFoundHandler (_req, _res, next) {
     next(new NotFoundError())
   }
 }
